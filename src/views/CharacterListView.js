@@ -1,7 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
-
+import Loader from 'react-loader-spinner';
 import { CharacterList } from "../components";
+import {fetchCharacters} from '../actions/index';
 // import actions
 
 class CharacterListView extends React.Component {
@@ -10,11 +11,15 @@ class CharacterListView extends React.Component {
   }
 
   componentDidMount() {
-    // call our action
+    this.props.fetchCharacters();
   }
 
   render() {
+    
     if (this.props.fetching) {
+      return(
+      <Loader type="Ball-Triangle" color="#00BFFF" height="90" width="60" />
+      )
       // return something here to indicate that you are fetching data
     }
     return (
@@ -24,12 +29,16 @@ class CharacterListView extends React.Component {
     );
   }
 }
-
+const mapStateToProps = (state) =>({
+  characters:state.charsReducer.characters,
+  fetching:state.charsReducer.fetching,
+  error:state.charsReducer.error
+})
 // our mapStateToProps needs to have two properties inherited from state
 // the characters and the fetching boolean
-export default connect(
-  null /* mapStateToProps replaces null here */,
+export default connect(mapStateToProps
+   ,
   {
-    /* action creators go here */
+   fetchCharacters
   }
 )(CharacterListView);
