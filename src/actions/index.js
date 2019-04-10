@@ -1,5 +1,5 @@
 import axios from 'axios';
-import thunk from 'redux-thunk';
+
 
 // we'll need axios
 export const FETCH_START = 'FETCH_START';
